@@ -6,25 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('custumer_id')->constrained('costumers')->onDelete('cascade');
-            $table->decimal('total', 10, 2);
-            $table->enum('payment_type', ['dinheiro', 'cartao', 'pix', 'cheque']);
-            $table->enum('status', ['concluida', 'cancelada', 'pendente'])->default('concluida');
+            $table->uuid('id')->primary();       // PK UUID
+            $table->uuid('user_id');             // FK para users.id (UUID)
+            $table->decimal('total', 10, 2);    // Valor total da venda
             $table->timestamps();
+
+            // Foreign key
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('sales');
