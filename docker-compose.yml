@@ -9,12 +9,12 @@ services:
     volumes:
       - ./:/var/www/html
     ports:
-      - "8001:8001"
+      - "8002:8002"
     depends_on:
       - db
       - redis
       - mongo
-    command: php artisan serve --host=0.0.0.0 --port=8001
+    command: php artisan serve --host=0.0.0.0 --port=8002
 
   db:
     image: postgres:14
