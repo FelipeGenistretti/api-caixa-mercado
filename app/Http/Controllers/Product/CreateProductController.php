@@ -2,47 +2,37 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Factories\MakeCreateProductService;
+use App\Http\Requests\CreateProductRequest;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
+use App\Http\Controllers\Controller;
 
-class CreateProductController
+class CreateProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(CreateProductRequest $request)
     {
-        //
-    }
+        try {
+            $data = $request->validated();
+            $createProductService = MakeCreateProductService::make();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            $product = $createProductService->execute(
+                $data
+            );
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            return response()->json([
+                'message' => 'Product created successfully',
+                'data' => $product
+            ], 201);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        } catch (InvalidArgumentException $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 400);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'Unexpected error: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
