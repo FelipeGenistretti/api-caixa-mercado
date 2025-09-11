@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Product\CreateProductController;
 use App\Http\Controllers\Product\IndexProductController;
 use App\Http\Controllers\Product\ShowProductController;
@@ -34,3 +35,6 @@ Route::prefix("/product")->group(function (){
     Route::get('/{id}', [ShowProductController::class, 'show']);
     Route::put('/{time}', [UpdateProductController::class, 'update']);
 });
+
+Route::post('/register', [AuthController::class, 'register']);
+
