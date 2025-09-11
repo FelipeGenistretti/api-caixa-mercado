@@ -8,4 +8,5 @@ interface ProductRepositoryInterface
     public function createProduct(array $data);
     public function findProductByName(string $name);
     public function findProductByBarCode(string $barcode);
+    public function findAllProducts();
 }
