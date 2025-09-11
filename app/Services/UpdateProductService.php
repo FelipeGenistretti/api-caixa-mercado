@@ -16,9 +16,13 @@ class UpdateProductService
         $this->productRepository = $productRepository;
     }
 
-    public function execute(Product $product, array $data)
+    public function execute(Product $product, ?string $name, ?float $price, ?string $category, ?int $stock_qty)
     {
-        return $this->productRepository->updateProduct($product, $data);
-
+        return $this->productRepository->updateProduct($product, [
+            'name' => $name ?? $product->name,
+            'price' => $price ?? $product->price,
+            'category' => $category ?? $product->category,
+            'stock_qty' => $stock_qty ?? $product->stock_qty,
+        ]);
     }
 }
