@@ -7,39 +7,25 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
-    
-        try{
-           $validatedData = $request->validate([
-                'name'=>'required|string|max:100',
-                'email'=>'required|email',
-                'password'=>'required|string|min:8|confirmed',
-                'password_confirmation'=>'required|string|min:8'
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-            ]);
-            $user = User::create([
-                'name'=>$validatedData['name'],
-                'email'=>$validatedData['email'],
-                'password'=>bcrypt($validatedData['password'])
-            ]);
-            
-         
-            $token = $user->createToken('auth_token')->plaintextToken;
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+        ]);
 
-            
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json([
-                'message'=>'Usuario criado com sucesso!!',
-                'token'=>$token
-            ]);
-
-
-        }catch(\Exception $e){
-            return response()->json([
-                'message'=>'Erro ao registrar usuario',
-                'error'=>$e->getMessage(),
-          
-            ]);
-        }
+        return response()->json([
+            'message' => 'Usuário criado com sucesso!',
+            'token' => $token,
+        ], 201);
     }
 }
