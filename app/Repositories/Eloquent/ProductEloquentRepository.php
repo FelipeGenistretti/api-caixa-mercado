@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\EloquentRepository;
+namespace App\Repositories\Eloquent;
 
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
@@ -24,6 +24,6 @@ class ProductEloquentRepository implements ProductRepositoryInterface
 
     public function findProductByBarCode(string $barcode)
     {
-        return Product::where('bar_code', $barcode)->exists();
+        return Product::where('code_bar', $barcode)->exists();
     }
 }

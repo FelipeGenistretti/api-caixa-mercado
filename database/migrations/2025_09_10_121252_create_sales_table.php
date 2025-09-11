@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,9 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('custumer_id')->constrained('costumers')->onDelete('cascade');
+            $table->foreignUuid('customer_id')->constrained('customers')->onDelete('cascade');
             $table->decimal('total', 10, 2);
             $table->enum('payment_type', ['dinheiro', 'cartao', 'pix', 'cheque']);
             $table->enum('status', ['concluida', 'cancelada', 'pendente'])->default('concluida');

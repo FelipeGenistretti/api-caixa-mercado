@@ -2,8 +2,7 @@
 
 namespace App\Factories;
 
-
-use App\Repositories\EloquentRepository\ProductEloquentRepository;
+use App\Repositories\Eloquent\ProductEloquentRepository;
 use App\Services\CreateProductService;
 
 class MakeCreateProductService

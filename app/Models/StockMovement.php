@@ -9,4 +9,7 @@ class StockMovement extends Model
 {
     /** @use HasFactory<\Database\Factories\StockMovementFactory> */
     use HasFactory;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 }
