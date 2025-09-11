@@ -36,6 +36,6 @@ class ProductEloquentRepository implements ProductRepositoryInterface
     public function updateProduct(Product $product ,array $data)
     {
         $product->update($data);
-        return $product; 
+        return $product->fresh(); 
     }
 }
