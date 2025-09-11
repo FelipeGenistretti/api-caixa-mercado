@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Product\CreateProductController;
+use App\Http\Controllers\Product\DeleteProductController;
 use App\Http\Controllers\Product\IndexProductController;
 use App\Http\Controllers\Product\ShowProductController;
 use App\Http\Controllers\Product\UpdateProductController;
@@ -34,6 +35,7 @@ Route::prefix("/product")->group(function (){
     Route::get('/', [IndexProductController::class, 'index']);
     Route::get('/{id}', [ShowProductController::class, 'show']);
     Route::put('/{product}', [UpdateProductController::class, 'update']);
+    Route::delete('/{product}', [DeleteProductController::class, 'destroy']);
 });
 
 Route::post('/register', [AuthController::class, 'register']);

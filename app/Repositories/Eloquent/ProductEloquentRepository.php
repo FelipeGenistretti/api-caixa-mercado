@@ -38,4 +38,10 @@ class ProductEloquentRepository implements ProductRepositoryInterface
         $product->update($data);
         return $product->fresh(); 
     }
+
+    public function deleteProduct(Product $product)
+    {
+        $result = $product->delete();
+        return $result;
+    }
 }

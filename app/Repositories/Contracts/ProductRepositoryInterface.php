@@ -12,4 +12,5 @@ interface ProductRepositoryInterface
     public function findProductByBarCode(string $barcode);
     public function findAllProducts();
     public function updateProduct(Product $product, array $data);
+    public function deleteProduct(Product $product);
 }
