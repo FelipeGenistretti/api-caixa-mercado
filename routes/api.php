@@ -6,6 +6,7 @@ use App\Http\Controllers\Product\DeleteProductController;
 use App\Http\Controllers\Product\IndexProductController;
 use App\Http\Controllers\Product\ShowProductController;
 use App\Http\Controllers\Product\UpdateProductController;
+use App\Http\Controllers\CreateSaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,6 @@ Route::prefix("/product")->group(function (){
     Route::delete('/{product}', [DeleteProductController::class, 'destroy']);
 });
 
+Route::post('/sales', [CreateSaleController::class, 'store']);
 Route::post('/register', [AuthController::class, 'register']);
 
