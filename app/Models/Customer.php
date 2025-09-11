@@ -11,9 +11,6 @@ class Customer extends Model
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
-
     public function sales():HasMany
     {
         return $this->hasMany(Sale::class);

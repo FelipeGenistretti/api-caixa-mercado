@@ -11,9 +11,6 @@ class SaleItem extends Model
     /** @use HasFactory<\Database\Factories\SaleItemFactory> */
     use HasFactory;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
-
     public function product():BelongsTo
     {
         return $this->belongsTo(Product::class);

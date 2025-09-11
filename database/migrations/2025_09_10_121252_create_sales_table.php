@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(DB::raw('gen_random_uuid()'));
+            $table->id('id');
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignUuid('customer_id')->constrained('customers')->onDelete('cascade');
             $table->decimal('total', 10, 2);

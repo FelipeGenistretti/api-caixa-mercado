@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Factories\MakeIndexProductService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 
 class IndexProductController extends Controller
 {
@@ -12,54 +16,22 @@ class IndexProductController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $indexProductService = MakeIndexProductService::make();
+            $products = $indexProductService->execute();
+
+            return ProductResource::collection($products);
+            
+        } catch(ModelNotFoundException $e){
+             return response()->json([
+                'message' => $e->getMessage() ?: 'Nenhum produto encontrado.'
+            ], 404);
+        } catch(\Exception $e){
+            return response()->json([
+                'message' => 'Ocorreu um erro inesperado.'
+            ], 500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
 }

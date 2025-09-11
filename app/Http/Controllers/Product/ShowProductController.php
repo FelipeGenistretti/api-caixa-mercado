@@ -2,64 +2,36 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Factories\MakeShowProductService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use InvalidArgumentException;
 
 class ShowProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function show(int $id)
     {
-        //
-    }
+        try {
+            $showProductService = MakeShowProductService::make();
+            $product = $showProductService->execute($id);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            return ProductResource::make($product);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        } catch (InvalidArgumentException $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 400);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'Unexpected error: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

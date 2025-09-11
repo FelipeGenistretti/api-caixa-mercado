@@ -7,6 +7,7 @@ use App\Http\Requests\CreateProductRequest;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 
 class CreateProductController extends Controller
 {
@@ -22,7 +23,7 @@ class CreateProductController extends Controller
 
             return response()->json([
                 'message' => 'Product created successfully',
-                'data' => $product
+                'data' => ProductResource::make($product)
             ], 201);
 
         } catch (InvalidArgumentException $e) {

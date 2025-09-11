@@ -13,8 +13,6 @@ class Product extends Model
 
     protected $table = 'products';
 
-    public $incrementing = false;
-    protected $keyType = 'string';
 
     // Permite o Mass Assignment nesses campos:
     protected $fillable = [

@@ -11,8 +11,6 @@ class Sale extends Model
     /** @use HasFactory<\Database\Factories\SaleFactory> */
     use HasFactory;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
 
     public function saleItems():HasMany
     {

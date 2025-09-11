@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stock_movements', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(DB::raw('gen_random_uuid()'));
+            $table->id('id');
             $table->foreignUuid('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->enum('type', ['entrada', 'saida', 'ajuste']);
