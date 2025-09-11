@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->decimal('total', 10, 2);
             $table->enum('payment_type', ['dinheiro', 'cartao', 'pix', 'cheque']);
             $table->enum('status', ['concluida', 'cancelada', 'pendente'])->default('concluida');

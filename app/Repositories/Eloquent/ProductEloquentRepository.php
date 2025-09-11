@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use Ramsey\Uuid\Type\Time;
 
 class ProductEloquentRepository implements ProductRepositoryInterface
 {
@@ -30,5 +31,11 @@ class ProductEloquentRepository implements ProductRepositoryInterface
     public function findAllProducts()
     {
         return Product::all();
+    }
+
+    public function updateProduct(Product $product ,array $data)
+    {
+        $product->update($data);
+        return $product; 
     }
 }

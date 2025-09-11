@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Product;
+
 interface ProductRepositoryInterface
 {
     public function findProductById(int $id);
@@ -9,4 +11,5 @@ interface ProductRepositoryInterface
     public function findProductByName(string $name);
     public function findProductByBarCode(string $barcode);
     public function findAllProducts();
+    public function updateProduct(Product $product, array $data);
 }

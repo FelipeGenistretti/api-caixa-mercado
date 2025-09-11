@@ -3,6 +3,7 @@
 use App\Http\Controllers\Product\CreateProductController;
 use App\Http\Controllers\Product\IndexProductController;
 use App\Http\Controllers\Product\ShowProductController;
+use App\Http\Controllers\Product\UpdateProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,5 @@ Route::prefix("/product")->group(function (){
     Route::post('/create', [CreateProductController::class, 'store']);
     Route::get('/', [IndexProductController::class, 'index']);
     Route::get('/{id}', [ShowProductController::class, 'show']);
+    Route::put('/{time}', [UpdateProductController::class, 'update']);
 });
