@@ -2,48 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
-use Illuminate\Http\Request;
+use App\Factories\MakeCreateSaleService;
+use App\Http\Requests\CreateSaleRequest;
+use App\Http\Resources\SaleResource;
+use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class CreateSaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(CreateSaleRequest $request): JsonResponse
     {
-        //
-    }
+        try {
+            $data = $request->validated();
+            $createSaleService = MakeCreateSaleService::make();
+            $sale = $createSaleService->execute($data);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            return response()->json([
+                'message' => 'Venda registrada com sucesso!',
+                'data'    => SaleResource::make($sale),
+            ], 201);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Sale $sale)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Sale $sale)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Sale $sale)
-    {
-        //
+        } catch (Throwable $e) {
+            return response()->json([
+                'error'   => 'Erro ao registrar a venda',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

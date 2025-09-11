@@ -11,7 +11,7 @@ class CreateSaleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class CreateSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => ['required','exists:users,id'],
+            'customer_id' => ['required','exists:customers,id'],
+            'payment_type'=> ['required','string','in:dinheiro,cartao,pix,cheque'],
+            'items'=> ['required','array','min:1'],
+            'items.*.code_bar'=> ['required','string','exists:products,code_bar'],
+            'items.*.quantity' => ['required','integer','min:1'],
         ];
     }
 }
