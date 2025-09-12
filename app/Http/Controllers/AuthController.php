@@ -24,7 +24,7 @@ class AuthController extends Controller
             'password' => bcrypt($validatedData['password']),
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token', ['admin'])->plainTextToken;
 
         return response()->json([
             'message' => 'Usuário criado com sucesso!',
@@ -56,7 +56,7 @@ class AuthController extends Controller
 
         $user = User::where('email',$request->email)->firstOrFail();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token', ['admin'])->plainTextToken;
 
         return response()->json([
             'message' => 'Login realizado com sucesso!',

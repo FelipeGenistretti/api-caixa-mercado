@@ -30,12 +30,12 @@ Route::prefix('admin')->group(function (){
 });
 
 // Dashboard e rotas de produtos protegidas (apenas admin)
-Route::middleware(['auth:sanctum', 'abilities:admin'])->prefix('admin')->group(function (){
+Route::middleware(['auth:sanctum', 'ability:admin'])->prefix('admin')->group(function (){
     Route::get('/dashboard', fn() => response()->json(['msg'=>'Bem-vindo Admin']));
 });
 
 // Rotas CRUD de produtos (apenas admin)
-Route::middleware(['auth:sanctum', 'abilities:admin'])->prefix('product')->group(function (){
+Route::middleware(['auth:sanctum', 'ability:admin'])->prefix('product')->group(function (){
     Route::post('/create', [CreateProductController::class, 'store']);
     Route::put('/{product}', [UpdateProductController::class, 'update']);
     Route::delete('/{product}', [DeleteProductController::class, 'destroy']);
@@ -52,7 +52,7 @@ Route::prefix('customer')->group(function (){
 });
 
 // Dashboard de cliente (protegido)
-Route::middleware(['auth:sanctum', 'abilities:customer'])->prefix('customer')->group(function (){
+Route::middleware(['auth:sanctum', 'ability:customer'])->prefix('customer')->group(function (){
     Route::get('/dashboard', fn() => response()->json(['msg'=>'Bem-vindo Cliente']));
     // Criar vendas (apenas cliente)
     Route::post('/sales', [CreateSaleController::class, 'store']);

@@ -16,7 +16,7 @@ class AuthCustomerController extends Controller
             $loginCustomerService = MakeLoginCustomerService::make();
             $customer = $loginCustomerService->execute($data);
 
-            $token = $customer->createToken('auth_token')->plainTextToken;
+            $token = $customer->createToken('auth_token', ['customer'])->plainTextToken;
 
             return response()->json([
                 'access_token' => $token,
@@ -42,7 +42,7 @@ class AuthCustomerController extends Controller
             $registerCustomerService = MakeRegisterCustomerService::make();
             $customer = $registerCustomerService->execute($data);
 
-            $token = $customer->createToken('auth_token')->plainTextToken;
+            $token = $customer->createToken('auth_token', ['customer'])->plainTextToken;
 
             return response()->json([
                 "message" => "Cliente registrado com sucesso!",
