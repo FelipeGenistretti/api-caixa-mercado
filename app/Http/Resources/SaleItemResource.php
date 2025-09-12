@@ -14,6 +14,11 @@ class SaleItemResource extends JsonResource
             'quantity' => $this->quantity,
             'unit_price' => $this->unit_price,
             'subtotal' => $this->subtotal,
+
+            'product' => [
+                'name'  => $this->product?->name,
+                'code_bar' => $this->product?->code_bar,
+            ],
         ];
     }
 }

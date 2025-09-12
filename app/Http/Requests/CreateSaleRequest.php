@@ -22,7 +22,6 @@ class CreateSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required','exists:users,id'],
             'customer_id' => ['required','exists:customers,id'],
             'payment_type'=> ['required','string','in:dinheiro,cartao,pix,cheque'],
             'items'=> ['required','array','min:1'],

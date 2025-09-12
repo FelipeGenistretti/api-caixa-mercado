@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
-    /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
-    public function sales():HasMany
+     protected $guarded = [];
+
+
+    public function sales(): HasMany
     {
         return $this->hasMany(Sale::class);
     }
 }
+

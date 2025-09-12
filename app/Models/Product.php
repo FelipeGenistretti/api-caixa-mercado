@@ -15,14 +15,8 @@ class Product extends Model
 
 
     // Permite o Mass Assignment nesses campos:
-    protected $fillable = [
-        'name',
-        'code_bar',
-        'price',
-        'category',
-        'stock_qty',
-    ];
-
+    protected $guarded = [];
+    
     public function saleItems():HasMany
     {
         return $this->hasMany(SaleItem::class);

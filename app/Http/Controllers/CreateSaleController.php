@@ -6,6 +6,7 @@ use App\Factories\MakeCreateSaleService;
 use App\Http\Requests\CreateSaleRequest;
 use App\Http\Resources\SaleResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class CreateSaleController extends Controller
@@ -14,12 +15,13 @@ class CreateSaleController extends Controller
     {
         try {
             $data = $request->validated();
+            $data['user_id'] = Auth::id();
             $createSaleService = MakeCreateSaleService::make();
-            $sale = $createSaleService->execute($data);
+            $sales = $createSaleService->execute($data);
 
             return response()->json([
                 'message' => 'Venda registrada com sucesso!',
-                'data'    => SaleResource::make($sale),
+                'data'    =>  new SaleResource($sales->load('saleItems.product')),
             ], 201);
 
         } catch (Throwable $e) {

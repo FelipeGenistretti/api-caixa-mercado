@@ -39,6 +39,24 @@ Route::prefix("/product")->group(function (){
     Route::delete('/{product}', [DeleteProductController::class, 'destroy']);
 });
 
-Route::post('/sales', [CreateSaleController::class, 'store']);
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->group(function (){
+    Route::post('/sales', [CreateSaleController::class, 'store']);
+});
+
+// // só admin
+// Route::middleware(['auth:sanctum', 'role:admin'])->get('/users', function () {
+//     return "Área de administração";
+// });
+
+// // admin OU operador
+// Route::middleware(['auth:sanctum', 'role:admin,operator'])->post('/sales', function () {
+//     return "Área de vendas";
+// });
+
+// // só cliente
+// Route::middleware(['auth:sanctum', 'role:customer'])->get('/my-orders', function () {
+//     return "Pedidos do cliente";
+// });
 
