@@ -11,6 +11,8 @@ class Sale extends Model
     /** @use HasFactory<\Database\Factories\SaleFactory> */
     use HasFactory;
 
+    protected $guarded = [];
+
 
     public function saleItems():HasMany
     {

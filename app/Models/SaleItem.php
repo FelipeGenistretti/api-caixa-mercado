@@ -11,6 +11,8 @@ class SaleItem extends Model
     /** @use HasFactory<\Database\Factories\SaleItemFactory> */
     use HasFactory;
 
+    protected $guarded = [];
+
     public function product():BelongsTo
     {
         return $this->belongsTo(Product::class);

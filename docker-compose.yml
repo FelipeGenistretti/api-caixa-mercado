@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
       - redis
-      - mongo
+      # - mongo   # 🔸 comentado pois não vai usar agora
     command: php artisan serve --host=0.0.0.0 --port=8002
 
   db:
@@ -38,20 +38,20 @@ services:
     volumes:
       - redisdata:/data
 
-  mongo:
-    image: mongo:7
-    container_name: Baazar_Mongo
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: patolino
-      MONGO_INITDB_ROOT_PASSWORD: patolino
-      MONGO_INITDB_DATABASE: baazar
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodata:/data/db
+  # mongo:
+  #   image: mongo:7
+  #   container_name: Baazar_Mongo
+  #   restart: unless-stopped
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: patolino
+  #     MONGO_INITDB_ROOT_PASSWORD: patolino
+  #     MONGO_INITDB_DATABASE: baazar
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodata:/data/db
 
 volumes:
   pgdata:
   redisdata:
-  mongodata:
+  # mongodata:   # 🔸 comentado pois não vai usar agora

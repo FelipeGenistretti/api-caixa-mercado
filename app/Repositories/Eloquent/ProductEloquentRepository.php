@@ -25,7 +25,7 @@ class ProductEloquentRepository implements ProductRepositoryInterface
 
     public function findProductByBarCode(string $barcode)
     {
-        return Product::where('code_bar', $barcode)->exists();
+        return Product::where('code_bar', trim($barcode))->first();
     }
 
     public function findAllProducts()

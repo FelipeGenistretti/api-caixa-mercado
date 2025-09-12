@@ -6,6 +6,7 @@ use App\Http\Controllers\Product\DeleteProductController;
 use App\Http\Controllers\Product\IndexProductController;
 use App\Http\Controllers\Product\ShowProductController;
 use App\Http\Controllers\Product\UpdateProductController;
+use App\Http\Controllers\CreateSaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,23 @@ Route::prefix("/product")->group(function (){
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login',[AuthController::class,'login']);
+
+Route::middleware('auth:sanctum')->group(function (){
+    Route::post('/sales', [CreateSaleController::class, 'store']);
+});
+
+// // só admin
+// Route::middleware(['auth:sanctum', 'role:admin'])->get('/users', function () {
+//     return "Área de administração";
+// });
+
+// // admin OU operador
+// Route::middleware(['auth:sanctum', 'role:admin,operator'])->post('/sales', function () {
+//     return "Área de vendas";
+// });
+
+// // só cliente
+// Route::middleware(['auth:sanctum', 'role:customer'])->get('/my-orders', function () {
+//     return "Pedidos do cliente";
+// });
 

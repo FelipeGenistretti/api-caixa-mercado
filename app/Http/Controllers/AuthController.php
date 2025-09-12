@@ -29,6 +29,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Usuário criado com sucesso!',
             'token' => $token,
+            'user'=>$user
         ], 201);
         }
         catch(\Exception $e){
