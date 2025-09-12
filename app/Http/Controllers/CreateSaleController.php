@@ -16,6 +16,7 @@ class CreateSaleController extends Controller
         try {
             $data = $request->validated();
             $data['user_id'] = Auth::id();
+            $data['customer_id'] = Auth::guard('customer')->id() ?? $data['customer_id']; 
             $createSaleService = MakeCreateSaleService::make();
             $sales = $createSaleService->execute($data);
 
