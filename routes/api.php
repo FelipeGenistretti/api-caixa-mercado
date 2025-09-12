@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthCustomerController;
 use App\Http\Controllers\Product\CreateProductController;
 use App\Http\Controllers\Product\DeleteProductController;
 use App\Http\Controllers\Product\IndexProductController;
 use App\Http\Controllers\Product\ShowProductController;
 use App\Http\Controllers\Product\UpdateProductController;
 use App\Http\Controllers\CreateSaleController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,49 +15,55 @@ use Illuminate\Support\Facades\Route;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Aqui você pode registrar as rotas de API para sua aplicação. 
-| Elas são carregadas pelo RouteServiceProvider e todas terão 
-| automaticamente o prefixo "api".
+| Rotas de API organizadas para Admin e Customer.
 |
 */
 
-// Exemplo de rota protegida pelo Sanctum
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// ---------------------
+// ADMIN ROUTES
+// ---------------------
+
+// Login e register (sem middleware, pois ainda não estão autenticados)
+Route::prefix('admin')->group(function (){
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 });
 
-// Exemplo de rota simples de teste
-Route::get('/ping', function () {
-    return response()->json(['message' => 'pong']);
+// Dashboard e rotas de produtos protegidas (apenas admin)
+Route::middleware(['auth:sanctum', 'abilities:admin'])->prefix('admin')->group(function (){
+    Route::get('/dashboard', fn() => response()->json(['msg'=>'Bem-vindo Admin']));
 });
 
-Route::prefix("/product")->group(function (){
+// Rotas CRUD de produtos (apenas admin)
+Route::middleware(['auth:sanctum', 'abilities:admin'])->prefix('product')->group(function (){
     Route::post('/create', [CreateProductController::class, 'store']);
-    Route::get('/', [IndexProductController::class, 'index']);
-    Route::get('/{id}', [ShowProductController::class, 'show']);
     Route::put('/{product}', [UpdateProductController::class, 'update']);
     Route::delete('/{product}', [DeleteProductController::class, 'destroy']);
 });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login',[AuthController::class,'login']);
+// ---------------------
+// CUSTOMER ROUTES
+// ---------------------
 
-Route::middleware('auth:sanctum')->group(function (){
+// Login e register (sem middleware)
+Route::prefix('customer')->group(function (){
+    Route::post('/register', [AuthCustomerController::class, 'register']);
+    Route::post('/login', [AuthCustomerController::class, 'login']);
+});
+
+// Dashboard de cliente (protegido)
+Route::middleware(['auth:sanctum', 'abilities:customer'])->prefix('customer')->group(function (){
+    Route::get('/dashboard', fn() => response()->json(['msg'=>'Bem-vindo Cliente']));
+    // Criar vendas (apenas cliente)
     Route::post('/sales', [CreateSaleController::class, 'store']);
 });
 
-// // só admin
-// Route::middleware(['auth:sanctum', 'role:admin'])->get('/users', function () {
-//     return "Área de administração";
-// });
+// ---------------------
+// PUBLIC / PRODUCT ROUTES
+// ---------------------
 
-// // admin OU operador
-// Route::middleware(['auth:sanctum', 'role:admin,operator'])->post('/sales', function () {
-//     return "Área de vendas";
-// });
-
-// // só cliente
-// Route::middleware(['auth:sanctum', 'role:customer'])->get('/my-orders', function () {
-//     return "Pedidos do cliente";
-// });
-
+// Rotas públicas de listagem e detalhes de produtos
+Route::prefix('product')->group(function (){
+    Route::get('/', [IndexProductController::class, 'index']);
+    Route::get('/{id}', [ShowProductController::class, 'show']);
+});
