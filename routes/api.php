@@ -9,6 +9,7 @@ use App\Http\Controllers\Product\ShowProductController;
 use App\Http\Controllers\Product\UpdateProductController;
 use App\Http\Controllers\CreateSaleController;
 use App\Http\Controllers\Product\AddCartController;
+use App\Http\Controllers\Product\RemoveItemCartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,7 @@ Route::middleware('auth:sanctum')->prefix('product')->group(function (){
 
 Route::middleware('auth:sanctum')->prefix('cart')->group(function (){
     Route::post('/add', [AddCartController::class, 'store']); 
+    Route::delete('/remove/{id}', [RemoveItemCartController::class, 'destroy']);
 });
 
 Route::prefix('customer')->group(function (){

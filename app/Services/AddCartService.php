@@ -34,12 +34,13 @@ class AddCartService
         }
 
         $cart[$barcode] = [
-            'id'       => $product['id'],
-            'name'     => $product['name'],
-            'price'    => $product['price'],
+            'id'       => $product->id,
+            'name'     => $product->name,
+            'price'    => $product->price,
             'quantity' => $quantity,
-            'stock_qty'=> $product['stock_qty'], 
+            'stock_qty'=> $product->stock_qty, 
         ];
+
     }
 
     $totalCart = 0;
