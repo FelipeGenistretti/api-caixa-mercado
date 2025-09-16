@@ -55,6 +55,7 @@ class CreateSaleService
                 'unit_price' => $product->price,
                 'subtotal'   => $subtotal,
             ]);
+            
             $product->stock_qty -= $itemData['quantity'];
             $product->save();
             if ($product->stock_qty < 10) {
