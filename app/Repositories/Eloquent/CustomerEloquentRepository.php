@@ -23,4 +23,9 @@ class CustomerEloquentRepository implements CustomerRepositoryInterface
         Cache::put($cacheKey, $customer, 60);
         return $customer; 
     }
+
+    public function findCustomerByCpf(string $cpf)
+    {
+        return Customer::where("cpf", $cpf)->fisrt();
+    }
 }

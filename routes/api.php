@@ -58,3 +58,6 @@ Route::prefix('product')->group(function (){
     Route::get('/{id}', [ShowProductController::class, 'show']);
 });
 
+Route::prefix("customer")->group(function (){
+    Route::get("/",)
+})

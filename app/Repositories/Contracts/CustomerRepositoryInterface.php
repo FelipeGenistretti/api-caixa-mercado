@@ -8,4 +8,5 @@ interface CustomerRepositoryInterface
 {
     public function findCustomerByEmail(string $email);
     public function createCustomer(array $data);
+    public function findCustomerByCpf(string $cpf);
 }
