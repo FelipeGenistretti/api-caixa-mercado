@@ -26,6 +26,12 @@ class CustomerEloquentRepository implements CustomerRepositoryInterface
 
     public function findCustomerByCpf(string $cpf)
     {
-        return Customer::where("cpf", $cpf)->fisrt();
+        return Customer::where("cpf", $cpf)->first();
+    }
+
+
+    public function allCostumers()
+    {
+        return Customer::all();
     }
 }

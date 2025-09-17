@@ -25,7 +25,7 @@ class RegisterCustomerCpfController extends Controller
 
         } catch (Throwable $e) {
             return response()->json([
-                'error'   => 'Erro ao registrar a venda',
+                'error'   => 'Erro ao registrar a cliente',
                 'message' => $e->getMessage(),
             ], 500);
         }

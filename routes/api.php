@@ -10,6 +10,8 @@ use App\Http\Controllers\Product\UpdateProductController;
 use App\Http\Controllers\CreateSaleController;
 use App\Http\Controllers\Product\AddCartController;
 use App\Http\Controllers\Product\RemoveItemCartController;
+use App\Http\Controllers\AllCustomersController;
+use App\Http\Controllers\RegisterCustomerCpfController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,40 +26,44 @@ use Illuminate\Support\Facades\Route;
 // ---------------------
 // ADMIN ROUTES
 // ---------------------
-
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-
-Route::middleware('auth:sanctum')->prefix('product')->group(function (){
+// ---------------------
+// PRODUCT ROUTES
+// ---------------------
+Route::middleware('auth:sanctum')->prefix('product')->group(function () {
     Route::post('/create', [CreateProductController::class, 'store']);
     Route::put('/{product}', [UpdateProductController::class, 'update']);
     Route::delete('/{product}', [DeleteProductController::class, 'destroy']);
 });
 
-Route::middleware('auth:sanctum')->prefix('cart')->group(function (){
-    Route::post('/add', [AddCartController::class, 'store']); 
-    Route::delete('/remove/{id}', [RemoveItemCartController::class, 'destroy']);
-});
-
-Route::prefix('customer')->group(function (){
-    Route::post('/register', [AuthCustomerController::class, 'register']);
-    Route::post('/login', [AuthCustomerController::class, 'login']);
-});
-
-// Dashboard de cliente (protegido)
-Route::middleware('auth:sanctum')->prefix('customer')->group(function (){
-    Route::get('/dashboard', fn() => response()->json(['msg'=>'Bem-vindo Cliente']));
-    Route::post('/sales', [CreateSaleController::class, 'store']);
-});
-
-Route::prefix('product')->group(function (){
+Route::prefix('product')->group(function () {
     Route::get('/', [IndexProductController::class, 'index']);
     Route::get('/{id}', [ShowProductController::class, 'show']);
 });
 
-Route::prefix("customer")->group(function (){
-    Route::get("/",)
-})
+// ---------------------
+// CART ROUTES
+// ---------------------
+Route::middleware('auth:sanctum')->prefix('cart')->group(function () {
+    Route::post('/add', [AddCartController::class, 'store']); 
+    Route::delete('/remove/{id}', [RemoveItemCartController::class, 'destroy']);
+});
+
+// ---------------------
+// CUSTOMER ROUTES
+// ---------------------
+Route::prefix('customer')->group(function () {
+    Route::post('/register', [AuthCustomerController::class, 'register']);
+    Route::post('/login', [AuthCustomerController::class, 'login']);
+    Route::get('/', [AllCustomersController::class, 'index']);
+    Route::post('/register/cpf', [RegisterCustomerCpfController::class, 'store']);
+});
+
+Route::middleware('auth:sanctum')->prefix('customer')->group(function () {
+    Route::get('/dashboard', fn () => response()->json(['msg' => 'Bem-vindo Cliente']));
+    Route::post('/sales', [CreateSaleController::class, 'store']);
+});

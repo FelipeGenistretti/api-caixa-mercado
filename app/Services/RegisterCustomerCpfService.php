@@ -31,6 +31,7 @@ class RegisterCustomerCpfService
             'email'    => $data['email'] ?? null,
             'cnpj'     => $data['cnpj'] ?? null,  
             'phone'    => $data['phone'] ?? null, 
+            'password' => Hash::make($data['password'] ?? '123456'),
         ];
 
         return $this->customerRepository->createCustomer($customerData);

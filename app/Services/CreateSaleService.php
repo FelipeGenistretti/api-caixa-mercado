@@ -27,7 +27,7 @@ class CreateSaleService
     {
         $sale = $this->saleRepository->createSale([
             'user_id'     => $data['user_id'],
-            'customer_id' => ,
+            //'customer_id' => ,
             'total'       => 0,
             'payment_type'=> $data['payment_type'],
         ]);
